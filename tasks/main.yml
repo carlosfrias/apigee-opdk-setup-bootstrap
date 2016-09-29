@@ -9,12 +9,6 @@
     password: '{{ apigee_repo_password }}'
   register: results
 
-- name: Set bootstrap file ownership
-  file:
-    path: '{{ bootstrap_script }}'
-    owner: '{{ opdk_user_name }}'
-    group: '{{ opdk_group_name }}'
-
 - name: Fail the playbook if bootstrap fails to install
   fail:
     msg: 'Bootstrap installation failed, no point in letting this go further'
@@ -49,13 +43,3 @@
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   when: apigee_repo_host is defined and apigee_stage is defined
-
-- name: Set Apigee directory ownership
-  file:
-    path: '{{ item }}'
-    owner: '{{ opdk_user_name }}'
-    group: '{{ opdk_user_name }}'
-    recurse: yes
-  with_items:
-  - /opt/apigee
-  - /opt/nginx
