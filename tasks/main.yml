@@ -11,7 +11,7 @@
 
 - name: Set bootstrap file ownership
   file:
-    path: '{{ bootstrap_filename }}'
+    path: '{{ bootstrap_script }}'
     owner: '{{ opdk_user_name }}'
     group: '{{ opdk_group_name }}'
 
