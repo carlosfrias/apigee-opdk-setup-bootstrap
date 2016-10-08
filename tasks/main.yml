@@ -1,5 +1,5 @@
 ---
-# tasks file for opdk-setup-bootstrap
+# tasks file for apigee-opdk-setup-bootstrap
 - name: Download bootstrap
   bootstrap:
     dest_dir: '{{ opdk_installer_path }}'

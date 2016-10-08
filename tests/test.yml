@@ -2,7 +2,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - opdk-setup-bootstrap
+    - apigee-opdk-setup-bootstrap
 
 - hosts: '{{ hosts }}'
   vars:

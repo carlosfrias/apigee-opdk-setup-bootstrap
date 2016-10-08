@@ -15,7 +15,7 @@ separately. It is assumed that files containing credentials are stored in the ~/
 
 Role Variables
 --------------
-Default values for these variables are provided by the role opdk-setup-default-settings.
+Default values for these variables are provided by the role apigee-opdk-setup-default-settings.
 
 URL from which to download the bootstrap scripts
 
@@ -45,14 +45,14 @@ Apigee artifact stage
 Dependencies
 ------------
 
-role: opdk-setup-default-settings
+role: apigee-opdk-setup-default-settings
 
 Example Playbook
 ----------------
 
     - hosts: servers
       roles:
-         - { role: opdk-setup-bootstrap }
+         - { role: apigee-opdk-setup-bootstrap }
 
 License
 -------

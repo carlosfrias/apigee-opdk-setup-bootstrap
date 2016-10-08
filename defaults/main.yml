@@ -1,3 +1,3 @@
 ---
-# defaults file for opdk-setup-bootstrap
+# defaults file for apigee-opdk-setup-bootstrap
 apigee_repo_url: 'https://{{ apigee_repo_uri }}'
