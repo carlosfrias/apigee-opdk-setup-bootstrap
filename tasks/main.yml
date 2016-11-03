@@ -1,5 +1,6 @@
 ---
 # tasks file for apigee-opdk-setup-bootstrap
+#- block:
 - name: Download bootstrap
   bootstrap:
     dest_dir: '{{ opdk_installer_path }}'
@@ -8,6 +9,16 @@
     user_name: '{{ apigee_repo_user }}'
     password: '{{ apigee_repo_password }}'
   register: results
+
+- name: Bootstrap script exists
+  stat:
+    path: '{{ bootstrap_script }}'
+  register: bootstrap_exists
+
+- name: Cache bootstrap script state
+  cache:
+    key: bootstrap_script_exists
+    value: '{{ bootstrap_exists.stat.exists }}'
 
 - name: Fail the playbook if bootstrap fails to install
   fail:
@@ -21,7 +32,7 @@
   register: results
   env:
     JAVA_HOME: '{{ java_home }}'
-  failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+  failed_when: (results is defined and results.rc is defined) and results.rc > 0 or results | failed
   when: apigee_repo_host is not defined
 
 - name: Install bootstrap
@@ -43,3 +54,5 @@
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   when: apigee_repo_host is defined and apigee_stage is defined
+
+#  when: bootstrap_script_exists is defined and bootstrap_script_exists
