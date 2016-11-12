@@ -2,7 +2,6 @@
 # tasks file for apigee-opdk-setup-bootstrap
 #- block:
 - name: Download bootstrap
-  become: yes
   bootstrap:
     dest_dir: '{{ opdk_installer_path }}'
     version: '{{ opdk_version }}'
