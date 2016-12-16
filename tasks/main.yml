@@ -25,7 +25,7 @@
     msg: 'Bootstrap installation failed, no point in letting this go further'
   when: not bootstrap_exists.stat.exists
 
-- name: Updated bootstrap needed
+- name: Update bootstrap
   file:
     path: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
     state: absent
