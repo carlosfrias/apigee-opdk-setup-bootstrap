@@ -26,9 +26,7 @@
   when: not bootstrap_exists.stat.exists
 
 - name: Force update apigee-service
-  file:
-    path: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-    state: absent
+  shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
   when: update_apigee_service is defined and update_apigee_service | bool == True
 
 - name: Install bootstrap
