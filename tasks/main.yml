@@ -23,7 +23,13 @@
 - name: Fail the playbook if bootstrap fails to install
   fail:
     msg: 'Bootstrap installation failed, no point in letting this go further'
-  when: results | failed
+  when: not bootstrap_exists.stat.exists
+
+- name: Updated bootstrap needed
+  file:
+    path: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    state: absent
+  when: update_bootstrap is defined and update_bootstrap | bool == True
 
 - name: Install bootstrap
   shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
