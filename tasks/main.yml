@@ -10,10 +10,6 @@
     password: '{{ apigee_repo_password }}'
   register: results
 
-- name: Pause a moment...
-  pause:
-    seconds: 10
-
 - name: Bootstrap script exists
   stat:
     path: '{{ bootstrap_script }}'
