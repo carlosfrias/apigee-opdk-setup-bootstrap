@@ -30,16 +30,6 @@
   when: update_apigee_service is defined and update_apigee_service | bool == True
 
 - name: Install bootstrap
-  shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-  args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  register: results
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  failed_when: (results is defined and results.rc is defined) and results.rc > 0 or results | failed
-  when: apigee_repo_host is not defined
-
-- name: Install bootstrap
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }} JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -47,16 +37,16 @@
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: apigee_repo_host is defined and apigee_stage is not defined
+  when: apigee_stage is not defined
 
 - name: Install bootstrap
-  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_host }} apigeeprotocol={{ apigee_repo_protocol }} JAVA_FIX=C'
+  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }} JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
   register: results
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: apigee_repo_host is defined and apigee_stage is defined
+  when: apigee_stage is defined
 
 #  when: bootstrap_script_exists is defined and bootstrap_script_exists
