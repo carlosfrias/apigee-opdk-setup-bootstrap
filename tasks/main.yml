@@ -30,7 +30,7 @@
   when: update_apigee_service is defined and update_apigee_service | bool == True
 
 - name: Install bootstrap
-  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }} JAVA_FIX=C'
+  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
   register: results
@@ -40,7 +40,7 @@
   when: apigee_stage is not defined
 
 - name: Install bootstrap
-  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }} JAVA_FIX=C'
+  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
   register: results
