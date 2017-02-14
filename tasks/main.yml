@@ -24,7 +24,7 @@
     msg: 'Bootstrap installation failed, no point in letting this go further'
   when: not bootstrap_exists.stat.exists
 
-- name: Force update apigee-service if update_apigee_service is set
+- name: Update apigee-service if update_apigee_service is set as part of an upgrade
   shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
   when: update_apigee_service is defined and update_apigee_service | bool == True
 
