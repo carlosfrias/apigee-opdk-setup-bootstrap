@@ -1,6 +1,5 @@
 ---
 # tasks file for apigee-opdk-setup-bootstrap
-#- block:
 - name: Download bootstrap
   bootstrap:
     dest_dir: '{{ opdk_installer_path }}'
@@ -25,11 +24,11 @@
     msg: 'Bootstrap installation failed, no point in letting this go further'
   when: not bootstrap_exists.stat.exists
 
-- name: Force update apigee-service
+- name: Force update apigee-service if update_apigee_service is set
   shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
   when: update_apigee_service is defined and update_apigee_service | bool == True
 
-- name: Install bootstrap
+- name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -39,7 +38,7 @@
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   when: apigee_stage is not defined
 
-- name: Install bootstrap
+- name: Install bootstrap from development repositories
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -49,4 +48,3 @@
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   when: apigee_stage is defined
 
-#  when: bootstrap_script_exists is defined and bootstrap_script_exists
