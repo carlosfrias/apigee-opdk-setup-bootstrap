@@ -26,13 +26,14 @@
 
 - name: Update apigee-service if update_apigee_service is set as part of an upgrade
   shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+  env:
+    JAVA_HOME: '{{ java_home }}'
   when: update_apigee_service is defined and update_apigee_service | bool == True
 
 - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  register: results
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -42,22 +43,22 @@
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  register: results
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   when: apigee_stage is defined
 
 - block:
-  - name: Configure local repository - 4.16.01
+  - name: Install bootstrap from local repository - 4.16.01
     shell: "bash {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
+    env:
+      JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '==')
 
-  - name: Configure local repository for greater than 4.16.01
+  - name: Install bootstrap from repository for greater than 4.16.01
     shell: "bash {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
+    env:
+      JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '>')
-
-  - name: Install apigee setup service
-    shell: '{{ apigee_service }} apigee-setup install'
 
   when: archive_folder is defined
