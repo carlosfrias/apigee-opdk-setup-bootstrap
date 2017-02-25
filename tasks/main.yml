@@ -49,16 +49,16 @@
   when: apigee_stage is defined
 
 - block:
-  - name: Install bootstrap from local repository - 4.16.01
+  - name: Install bootstrap from local repository for 4.16.01
     shell: "bash {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '==')
 
-  - name: Install bootstrap from repository for greater than 4.16.01
+  - name: Install bootstrap from local repository for greater than 4.16.01
     shell: "bash {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '>')
 
-  when: archive_folder is defined
+  when: archive_folder is defined and archive_folder == ''
