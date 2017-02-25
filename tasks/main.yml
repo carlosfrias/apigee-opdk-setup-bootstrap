@@ -24,11 +24,11 @@
     msg: 'Bootstrap installation failed, no point in letting this go further'
   when: not bootstrap_exists.stat.exists
 
-- name: Update apigee-service if update_apigee_service is set as part of an upgrade
+- name: Update apigee-service if upgrade_edge is set as part of an upgrade
   shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'
-  when: update_apigee_service is defined and update_apigee_service | bool == True
+  when: upgrade_edge is defined and upgrade_edge | bool == True
 
 - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
