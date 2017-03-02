@@ -63,4 +63,4 @@
       JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '>')
 
-  when: archive_folder is defined and archive_folder == ''
+  when: archive_folder is defined and not archive_folder == ''
