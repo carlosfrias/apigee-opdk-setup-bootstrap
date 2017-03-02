@@ -1,53 +1,54 @@
 ---
 # tasks file for apigee-opdk-setup-bootstrap
-- name: Download bootstrap
-  bootstrap:
-    dest_dir: '{{ opdk_installer_path }}'
-    version: '{{ opdk_version }}'
-    url: '{{ apigee_repo_url }}'
-    user_name: '{{ apigee_repo_user }}'
-    password: '{{ apigee_repo_password }}'
-  register: results
+- block:
+  - name: Download bootstrap
+    bootstrap:
+      dest_dir: '{{ opdk_installer_path }}'
+      version: '{{ opdk_version }}'
+      url: '{{ apigee_repo_url }}'
+      user_name: '{{ apigee_repo_user }}'
+      password: '{{ apigee_repo_password }}'
+    register: results
+
+  - name: Bootstrap script exists
+    stat:
+      path: '{{ bootstrap_script }}'
+
+  - name: Cache bootstrap script state
+    cache:
+      key: bootstrap_script_exists
+      value: '{{ bootstrap_exists.stat.exists }}'
+
+  - name: Fail the playbook if bootstrap fails to install
+    fail:
+      msg: 'Bootstrap installation failed, no point in letting this go further'
+    when: not bootstrap_exists.stat.exists
+
+  - name: Update apigee-service if upgrade_edge is set as part of an upgrade
+    shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    when: upgrade_edge is defined and upgrade_edge | bool == True
+
+  - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
+    shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+    args:
+      creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+    when: apigee_stage is not defined
+
+  - name: Install bootstrap from development repositories
+    shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+    args:
+      creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+    when: apigee_stage is defined
+
   when: archive_folder is not defined
-
-- name: Bootstrap script exists
-  stat:
-    path: '{{ bootstrap_script }}'
-  register: bootstrap_exists
-
-- name: Cache bootstrap script state
-  cache:
-    key: bootstrap_script_exists
-    value: '{{ bootstrap_exists.stat.exists }}'
-
-- name: Fail the playbook if bootstrap fails to install
-  fail:
-    msg: 'Bootstrap installation failed, no point in letting this go further'
-  when: not bootstrap_exists.stat.exists
-
-- name: Update apigee-service if upgrade_edge is set as part of an upgrade
-  shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  when: upgrade_edge is defined and upgrade_edge | bool == True and archive_folder is not defined
-
-- name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
-  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
-  args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: apigee_stage is not defined and archive_folder is not defined
-
-- name: Install bootstrap from development repositories
-  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
-  args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: apigee_stage is defined and archive_folder is not defined
 
 - block:
   - name: Install bootstrap from local repository for 4.16.01
