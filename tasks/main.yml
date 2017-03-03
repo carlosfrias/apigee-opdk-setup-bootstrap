@@ -13,6 +13,7 @@
   - name: Bootstrap script exists
     stat:
       path: '{{ bootstrap_script }}'
+    register: bootstrap_exists
 
   - name: Cache bootstrap script state
     cache:
