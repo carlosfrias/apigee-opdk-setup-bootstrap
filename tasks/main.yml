@@ -17,7 +17,7 @@
   - name: Cache bootstrap script state
     cache:
       key: bootstrap_script_exists
-      value: '{{ bootstrap_exists.stat.exists }}'
+      value: '{{ bootstrap_script.stat.exists }}'
 
   - name: Fail the playbook if bootstrap fails to install
     fail:
