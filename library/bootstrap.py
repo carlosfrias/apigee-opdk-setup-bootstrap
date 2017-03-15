@@ -4,6 +4,7 @@ from ansible.module_utils.basic import *
 
 bootstrap_filename = None
 url = None
+file_path = None
 
 def store_bootstrap_script(filename, dest_directory, text):
     global file_path
