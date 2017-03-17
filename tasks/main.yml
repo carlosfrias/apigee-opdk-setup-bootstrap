@@ -2,6 +2,7 @@
 # tasks file for apigee-opdk-setup-bootstrap
 - block:
   - name: Download bootstrap
+    no_log: True
     bootstrap:
       dest_dir: '{{ opdk_installer_path }}'
       version: '{{ opdk_version }}'
@@ -30,12 +31,14 @@
 
   - block:
     - name: Update apigee-service if upgrade_edge is set as part of an upgrade
+      no_log: True
       shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
       env:
         JAVA_HOME: '{{ java_home }}'
       when: upgrade_edge is defined and upgrade_edge | bool == True
 
     - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
+      no_log: True
       shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
       args:
         creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -45,6 +48,7 @@
       when: apigee_stage is not defined
 
     - name: Install bootstrap from development repositories
+      no_log: True
       shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
       args:
         creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -58,12 +62,14 @@
         shell: 'yum clean all'
 
       - name: Update apigee-service if upgrade_edge is set as part of an upgrade
+        no_log: True
         shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
         env:
           JAVA_HOME: '{{ java_home }}'
         when: upgrade_edge is defined and upgrade_edge | bool == True
 
       - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
+        no_log: True
         shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
         args:
           creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -73,6 +79,7 @@
         when: apigee_stage is not defined
 
       - name: Install bootstrap from development repositories
+        no_log: True
         shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
         args:
           creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -85,12 +92,14 @@
 
 - block:
   - name: Install bootstrap from local repository for 4.16.01
+    no_log: True
     shell: "bash {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '==')
 
   - name: Install bootstrap from local repository for greater than 4.16.01
+    no_log: True
     shell: "bash {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
