@@ -106,3 +106,13 @@
     when: opdk_version | version_compare('4.16.01', '>')
 
   when: archive_folder is defined and not archive_folder == ''
+
+- name: Validate that apigee-service exists
+  stat:
+    path: "{{ apigee_installation_home }}/apigee-service/bin/apigee-service"
+  register: apigee-service
+
+- name: Fail if apigee-service is not installed
+  fail:
+    msg: "apigee-service was not installed"
+  when: not apigee-service.stat.exists
