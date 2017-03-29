@@ -110,9 +110,9 @@
 - name: Validate that apigee-service exists
   stat:
     path: "{{ apigee_installation_home }}/apigee-service/bin/apigee-service"
-  register: apigee-service
+  register: apigee_service
 
 - name: Fail if apigee-service is not installed
   fail:
-    msg: "apigee-service was not installed"
-  when: not apigee-service.stat.exists
+    msg: "Failing the playbook because apigee-service should be installed now and it was not installed"
+  when: not apigee_service.stat.exists
