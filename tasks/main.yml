@@ -44,19 +44,17 @@
     when: not bootstrap_exists.stat.exists
 
   - name: Yum clean all
-    command: "yum clean all"
+    shell: "yum clean all"
 
   - block:
     - name: Update apigee-service if upgrade_edge is set as part of an upgrade
-      no_log: True
-      command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+      shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
       env:
         JAVA_HOME: '{{ java_home }}'
       when: upgrade_edge is defined and upgrade_edge | bool == True
 
     - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
-      no_log: True
-      command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+      shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
       args:
         creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
       env:
@@ -65,8 +63,7 @@
       when: apigee_stage is not defined
 
     - name: Install bootstrap from development repositories
-      no_log: True
-      command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+      shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
       args:
         creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
       env:
@@ -76,18 +73,17 @@
 
     rescue:
       - name: Yum failed to update, let's clean yum
-        command: 'yum clean all'
+        shell: 'yum clean all'
 
       - name: Update apigee-service if upgrade_edge is set as part of an upgrade
-        no_log: True
-        command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+        shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
         env:
           JAVA_HOME: '{{ java_home }}'
         when: upgrade_edge is defined and upgrade_edge | bool == True
 
       - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
         no_log: True
-        command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+        shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
         args:
           creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
         env:
@@ -97,7 +93,7 @@
 
       - name: Install bootstrap from development repositories
         no_log: True
-        command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+        shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
         args:
           creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
         env:
@@ -110,14 +106,14 @@
 - block:
   - name: Install bootstrap from local repository for 4.16.01
     no_log: True
-    command: "bash {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
+    shell: "bash {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '==')
 
   - name: Install bootstrap from local repository for greater than 4.16.01
     no_log: True
-    command: "bash {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
+    shell: "bash {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
     when: opdk_version | version_compare('4.16.01', '>')
