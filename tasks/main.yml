@@ -18,7 +18,13 @@
   when: opdk_version | version_compare('4.17.01', '>=')
 
 - block:
-  - name: Download bootstrap
+  - name: Create installer path
+    file:
+      path: "{{ opdk_installer_path }}"
+      owner: "{{ opdk_user_name }}"
+      group: "{{ opdk_group_name }}"
+
+  - name: Download bootstrap with no proxy use
     no_log: True
     bootstrap:
       dest_dir: '{{ opdk_installer_path }}'
@@ -27,6 +33,21 @@
       user_name: '{{ apigee_repo_user }}'
       password: '{{ apigee_repo_password }}'
     register: results
+    when: http_proxy is not defined and https_proxy is not defined
+
+  - name: Download bootstrap with proxy
+    no_log: True
+    bootstrap:
+      dest_dir: '{{ opdk_installer_path }}'
+      version: '{{ opdk_version }}'
+      url: '{{ apigee_repo_url }}'
+      user_name: '{{ apigee_repo_user }}'
+      password: '{{ apigee_repo_password }}'
+    register: results
+    when: http_proxy is defined and https_proxy is defined
+    environment:
+      http_proxy: "{{ http_proxy }}"
+      https_proxy: "{{ https_proxy }}"
 
   - name: Bootstrap script exists
     stat:
@@ -47,29 +68,71 @@
     shell: "yum clean all"
 
   - block:
-    - name: Update apigee-service if upgrade_edge is set as part of an upgrade
-      shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-      env:
-        JAVA_HOME: '{{ java_home }}'
-      when: upgrade_edge is defined and upgrade_edge | bool == True
+    - block:
+      - name: Update apigee-service if upgrade_edge is set as part of an upgrade
+        shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+        env:
+          JAVA_HOME: '{{ java_home }}'
+        when: upgrade_edge is defined and upgrade_edge | bool == True
 
-    - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
-      shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
-      args:
-        creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-      env:
-        JAVA_HOME: '{{ java_home }}'
-      failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-      when: apigee_stage is not defined
+      - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
+        shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+        args:
+          creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+        env:
+          JAVA_HOME: '{{ java_home }}'
+        failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+        when: apigee_stage is not defined
+        register: results
 
-    - name: Install bootstrap from development repositories
-      shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
-      args:
-        creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-      env:
-        JAVA_HOME: '{{ java_home }}'
-      failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-      when: apigee_stage is defined
+      - name: Install bootstrap from development repositories
+        shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+        args:
+          creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+        env:
+          JAVA_HOME: '{{ java_home }}'
+        failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+        register: results
+        when: apigee_stage is defined
+      when: http_proxy is not defined and https_proxy is not defined
+
+    - block:
+      - name: Update apigee-service if upgrade_edge is set as part of an upgrade
+        shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+        env:
+          JAVA_HOME: '{{ java_home }}'
+        when: upgrade_edge is defined and upgrade_edge | bool == True
+        environment:
+          http_proxy: "{{ http_proxy }}"
+          https_proxy: "{{ https_proxy }}"
+
+      - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
+        shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+        args:
+          creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+        env:
+          JAVA_HOME: '{{ java_home }}'
+        failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+        register: results
+        when: apigee_stage is not defined
+        environment:
+          http_proxy: "{{ http_proxy }}"
+          https_proxy: "{{ https_proxy }}"
+
+      - name: Install bootstrap from development repositories
+        shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri }} apigeeprotocol={{ apigee_repo_protocol }}:// JAVA_FIX=C'
+        args:
+          creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+        env:
+          JAVA_HOME: '{{ java_home }}'
+        failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+        register: results
+        when: apigee_stage is defined
+        environment:
+          http_proxy: "{{ http_proxy }}"
+          https_proxy: "{{ https_proxy }}"
+
+      when: http_proxy is defined and https_proxy is defined
 
     rescue:
       - name: Yum failed to update, let's clean yum
