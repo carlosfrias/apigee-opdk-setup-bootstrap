@@ -1,6 +1,14 @@
 ---
 # tasks file for apigee-opdk-setup-bootstrap
+- name: Create installer path
+  file:
+    path: "{{ opdk_installer_path }}"
+    state: directory
+    owner: "{{ opdk_user_name }}"
+    group: "{{ opdk_group_name }}"
+
 - block:
+
   - name: Find available epel repos
     find:
       pattern: "epel*"
@@ -16,13 +24,6 @@
     with_items: "{{ remove_repos.files }}"
 
   when: opdk_version | version_compare('4.17.01', '>=')
-
-  - name: Create installer path
-    file:
-      path: "{{ opdk_installer_path }}"
-      state: directory
-      owner: "{{ opdk_user_name }}"
-      group: "{{ opdk_group_name }}"
 
 - block:
   - name: Download bootstrap
