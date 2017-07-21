@@ -1,0 +1,13 @@
+---
+- name: Download bootstrap with proxy
+  no_log: True
+  bootstrap:
+    dest_dir: '{{ opdk_installer_path }}'
+    version: '{{ opdk_version }}'
+    url: '{{ apigee_repo_url }}'
+    user_name: '{{ apigee_repo_user }}'
+    password: '{{ apigee_repo_password }}'
+  register: results
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"

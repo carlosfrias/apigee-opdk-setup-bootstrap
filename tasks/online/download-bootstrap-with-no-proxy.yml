@@ -1,0 +1,11 @@
+---
+- name: Download bootstrap with no proxy use
+  no_log: True
+  bootstrap:
+    dest_dir: '{{ opdk_installer_path }}'
+    version: '{{ opdk_version }}'
+    url: '{{ apigee_repo_url }}'
+    user_name: '{{ apigee_repo_user }}'
+    password: '{{ apigee_repo_password }}'
+  register: results
+

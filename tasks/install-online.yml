@@ -1,0 +1,47 @@
+---
+- name: Create installer path
+  file:
+    path: "{{ opdk_installer_path }}"
+    owner: "{{ opdk_user_name }}"
+    group: "{{ opdk_group_name }}"
+
+- include: online/download-bootstrap-with-no-proxy.yml
+  when: http_proxy is not defined and https_proxy is not defined
+
+- include: online/download-bootstrap-with-proxy.yml
+  when: http_proxy is defined and https_proxy is defined
+
+- name: Bootstrap script exists
+  stat:
+    path: '{{ bootstrap_script }}'
+  register: bootstrap_exists
+
+- name: Cache bootstrap script state
+  cache:
+    key: bootstrap_script_exists
+    value: '{{ bootstrap_exists.stat.exists }}'
+
+- name: Fail the playbook if bootstrap fails to install
+  fail:
+    msg: 'Bootstrap installation failed, no point in letting this go further'
+  when: not bootstrap_exists.stat.exists
+
+- name: Yum clean all
+  shell: "yum clean all"
+
+- block:
+  - include: online/install-bootstrap-with-no-proxy.yml
+    when: http_proxy is not defined and https_proxy is not defined
+
+  - include: online/install-bootstrap-with-proxy.yml
+    when: http_proxy is defined and https_proxy is defined
+
+  rescue:
+    - name: Yum failed to update, let's clean yum
+      shell: 'yum clean all'
+
+    - include: online/install-bootstrap-with-no-proxy.yml
+      when: http_proxy is not defined and https_proxy is not defined
+
+    - include: online/install-bootstrap-with-proxy.yml
+      when: http_proxy is defined and https_proxy is defined
