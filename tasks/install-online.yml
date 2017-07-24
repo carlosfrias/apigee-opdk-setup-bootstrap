@@ -21,7 +21,7 @@
     key: bootstrap_script_exists
     value: '{{ bootstrap_exists.stat.exists }}'
 
-- name: Fail the playbook if bootstrap fails to install
+- name: Fail the playbook if bootstrap fails to download
   fail:
     msg: 'Bootstrap installation failed, no point in letting this go further'
   when: not bootstrap_exists.stat.exists
