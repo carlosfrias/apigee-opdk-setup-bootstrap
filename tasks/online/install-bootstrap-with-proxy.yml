@@ -5,6 +5,7 @@
     JAVA_HOME: '{{ java_home }}'
   when: upgrade_edge is defined and upgrade_edge | bool == True
   environment:
+    no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
@@ -18,6 +19,7 @@
   register: results
   when: apigee_stage is not defined
   environment:
+    no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
@@ -31,5 +33,6 @@
   register: results
   when: apigee_stage is defined
   environment:
+    no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
