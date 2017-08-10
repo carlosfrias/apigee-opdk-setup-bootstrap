@@ -1,13 +1,11 @@
 ---
 - name: Install bootstrap from local repository for 4.16.01
-  no_log: True
   shell: "bash {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'
   when: opdk_version | version_compare('4.16.01', '==')
 
 - name: Install bootstrap from local repository for greater than 4.16.01
-  no_log: True
   shell: "bash {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'

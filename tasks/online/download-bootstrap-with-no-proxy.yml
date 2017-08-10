@@ -1,6 +1,5 @@
 ---
 - name: Download bootstrap with no proxy
-  no_log: True
   bootstrap:
     dest_dir: '{{ opdk_installer_path }}'
     version: '{{ opdk_version }}'
