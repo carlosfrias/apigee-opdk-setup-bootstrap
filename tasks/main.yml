@@ -7,22 +7,22 @@
     owner: "{{ opdk_user_name }}"
     group: "{{ opdk_group_name }}"
 
-- block:
-  - name: Find available epel repos
-    find:
-      pattern: "epel*"
-      path: /etc/yum.repos.d
-      recurse: yes
-      file_type: file
-    register: remove_repos
-
-  - name: Remove reference to epel if version is greater than 4.17.01
-    file:
-      path: "{{ item.path }}"
-      state: absent
-    with_items: "{{ remove_repos.files }}"
-
-  when: opdk_version | version_compare('4.17.01', '>=')
+#- block:
+#  - name: Find available epel repos
+#    find:
+#      pattern: "epel*"
+#      path: /etc/yum.repos.d
+#      recurse: yes
+#      file_type: file
+#    register: remove_repos
+#
+#  - name: Remove reference to epel if version is greater than 4.17.01
+#    file:
+#      path: "{{ item.path }}"
+#      state: absent
+#    with_items: "{{ remove_repos.files }}"
+#
+#  when: opdk_version | version_compare('4.17.01', '>=')
 
 - include: install-online.yml
   when: archive_folder is not defined
