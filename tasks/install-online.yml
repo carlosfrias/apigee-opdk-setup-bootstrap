@@ -6,10 +6,10 @@
     group: "{{ opdk_group_name }}"
 
 - include: online/download-bootstrap-with-no-proxy.yml
-  when: http_proxy is not defined and https_proxy is not defined
+  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
 
 - include: online/download-bootstrap-with-proxy.yml
-  when: http_proxy is defined and https_proxy is defined
+  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
 
 - name: Bootstrap script exists
   stat:
@@ -31,17 +31,17 @@
 
 - block:
   - include: online/install-bootstrap-with-no-proxy.yml
-    when: http_proxy is not defined and https_proxy is not defined
+    when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
 
   - include: online/install-bootstrap-with-proxy.yml
-    when: http_proxy is defined and https_proxy is defined
+    when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
 
   rescue:
     - name: Yum failed to update, let's clean yum
       shell: 'yum clean all'
 
     - include: online/install-bootstrap-with-no-proxy.yml
-      when: http_proxy is not defined and https_proxy is not defined
+      when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
 
     - include: online/install-bootstrap-with-proxy.yml
-      when: http_proxy is defined and https_proxy is defined
+      when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
