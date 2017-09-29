@@ -5,7 +5,7 @@
     JAVA_HOME: '{{ java_home }}'
   when: opdk_version | version_compare('4.16.01', '==')
 
-- name: DEBUG_MODE: Install bootstrap from local repository for 4.16.01
+- name: DEBUG_MODE - Install bootstrap from local repository for 4.16.01
   shell: "bash -x {{ archive_folder }}/repos/bootstrap.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'
@@ -17,7 +17,7 @@
     JAVA_HOME: '{{ java_home }}'
   when: opdk_version | version_compare('4.16.01', '>')
 
-- name: DEBUG_MODE: Install bootstrap from local repository for greater than 4.16.01
+- name: DEBUG_MODE - Install bootstrap from local repository for greater than 4.16.01
   shell: "bash -x {{ archive_folder }}/repos/bootstrap_{{ opdk_version }}.sh apigeeprotocol='file://' apigeerepobasepath={{ archive_folder }}/repos JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'

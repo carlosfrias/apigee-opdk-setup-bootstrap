@@ -5,7 +5,7 @@
     JAVA_HOME: '{{ java_home }}'
   when: upgrade_edge is defined and upgrade_edge | bool == True
 
-- name: DEBUG_MODE: Update apigee-service if upgrade_edge is set as part of an upgrade
+- name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade
   shell: "bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'
@@ -21,7 +21,7 @@
   when: apigee_stage is not defined
   register: results
 
-- name: DEBUG_MODE: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with no proxy
+- name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with no proxy
   shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
@@ -41,7 +41,7 @@
   register: results
   when: apigee_stage is defined
 
-- name: DEBUG_MODE: Install bootstrap from development repositories with no proxy
+- name: DEBUG_MODE - Install bootstrap from development repositories with no proxy
   shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri  | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol  | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
   args:
     creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
