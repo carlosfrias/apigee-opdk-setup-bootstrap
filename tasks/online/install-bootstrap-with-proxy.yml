@@ -3,7 +3,7 @@
   shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
   env:
     JAVA_HOME: '{{ java_home }}'
-  when: upgrade_edge is defined and upgrade_edge | bool == True
+  when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
@@ -27,7 +27,7 @@
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   register: results
-  when: apigee_stage is not defined
+  when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
@@ -55,7 +55,7 @@
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
   register: results
-  when: apigee_stage is defined
+  when: apigee_stage is defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
   environment:
     no_proxy: "{{ no_proxy }}"
     http_proxy: "{{ http_proxy }}"
