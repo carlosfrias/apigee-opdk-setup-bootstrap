@@ -1,35 +1,39 @@
 ---
-- name: Update apigee-service if upgrade_edge is set as part of an upgrade
-  shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  when: (apigee_repo_uri is not defined or apigee_repo_uri | trim | length == 0) and upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+- block:
+  - name: Update apigee-service if upgrade_edge is set as part of an upgrade
+    shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
 
-- name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade
-  shell: "bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  when: (apigee_repo_uri is not defined or apigee_repo_uri | trim | length == 0) and upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
+  - name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade
+    shell: "bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
+  when: (apigee_repo_uri is not defined or apigee_repo_uri | trim | length == 0)
 
-- name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with no proxy
-  shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-  args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: (apigee_repo_uri is not defined and apigee_repo_uri | trim | length > 0) and apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
-  register: results
+- block:
+  - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with no proxy
+    shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
+    args:
+      creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+    when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+    register: results
 
-- name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with no proxy
-  shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-  args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
-  env:
-    JAVA_HOME: '{{ java_home }}'
-  failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: (apigee_repo_uri is not defined and apigee_repo_uri | trim | length > 0) and apigee_stage is not defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
-  register: results
+  - name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with no proxy
+    shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
+    args:
+      creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    env:
+      JAVA_HOME: '{{ java_home }}'
+    failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
+    when: apigee_stage is not defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
+    register: results
+  when: (apigee_repo_uri is not defined and apigee_repo_uri | trim | length > 0)
 
 - block:
   - name: Install bootstrap from development repositories with no proxy
