@@ -28,7 +28,7 @@
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
-  when: apigee_stage is not defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
+  when: (apigee_repo_uri is not defined and apigee_repo_uri | trim | length > 0) and apigee_stage is not defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
   register: results
 
 - block:
