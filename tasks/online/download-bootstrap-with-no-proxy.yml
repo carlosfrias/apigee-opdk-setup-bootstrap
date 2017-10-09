@@ -4,7 +4,7 @@
     dest_dir: '{{ opdk_installer_path }}'
     version: '{{ opdk_version }}'
     url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}'
-    user_name: '{{ apigee_repo_user }}'
-    password: '{{ apigee_repo_password }}'
+    user_name: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
+    password: '{{ apigee_repo_pass | default(default_apigee_repo_pass) }}'
   register: results
 
