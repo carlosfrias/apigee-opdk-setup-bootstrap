@@ -5,6 +5,6 @@
     version: '{{ opdk_version }}'
     url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}'
     user_name: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
-    password: '{{ apigee_repo_password| default(default_apigee_repo_password) }}'
+    password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
   register: results
 
