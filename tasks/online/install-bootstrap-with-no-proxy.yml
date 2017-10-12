@@ -1,4 +1,8 @@
 ---
+- name: Remove apigee-service is this is an upgrade
+  shell: "{{ apigee_service }} apigee-service uninstall"
+  when: upgrade_edge is defined and upgrade_edge | bool == True
+
 - block:
   - name: Update apigee-service if upgrade_edge is set as part of an upgrade
     shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
