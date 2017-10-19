@@ -25,10 +25,10 @@
 #  when: opdk_version | version_compare('4.17.01', '>=')
 
 - include_tasks: install-online.yml
-  when: archive_folder is not defined
+  when: apigeerepobasepath is not defined
 
 - include_tasks: install-mirror.yml
-  when: archive_folder is defined and not archive_folder == ''
+  when: apigeerepobasepath is defined and not apigeerepobasepath == ''
 
 - name: Validate that apigee-service exists
   stat:
