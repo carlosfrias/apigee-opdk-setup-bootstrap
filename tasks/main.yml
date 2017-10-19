@@ -7,28 +7,11 @@
     owner: "{{ opdk_user_name }}"
     group: "{{ opdk_group_name }}"
 
-#- block:
-#  - name: Find available epel repos
-#    find:
-#      pattern: "epel*"
-#      path: /etc/yum.repos.d
-#      recurse: yes
-#      file_type: file
-#    register: remove_repos
-#
-#  - name: Remove reference to epel if version is greater than 4.17.01
-#    file:
-#      path: "{{ item.path }}"
-#      state: absent
-#    with_items: "{{ remove_repos.files }}"
-#
-#  when: opdk_version | version_compare('4.17.01', '>=')
-
 - include_tasks: install-online.yml
-  when: apigeerepobasepath is not defined
+  when: install_archive_mirror is not defined
 
-- include_tasks: install-mirror.yml
-  when: apigeerepobasepath is defined and not apigeerepobasepath == ''
+- include_tasks: install-archive-mirror.yml
+  when: install_archive_mirror is defined and install_archive_mirror | bool == True
 
 - name: Validate that apigee-service exists
   stat:
