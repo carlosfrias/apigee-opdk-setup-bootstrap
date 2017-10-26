@@ -15,7 +15,7 @@
 
 - name: Validate that apigee-service exists
   stat:
-    path: "{{ apigee_installation_home }}/apigee-service/bin/apigee-service"
+    path: "{{ apigee_home }}/apigee-service/bin/apigee-service"
   register: apigee_service
 
 - name: Fail if apigee-service is not installed

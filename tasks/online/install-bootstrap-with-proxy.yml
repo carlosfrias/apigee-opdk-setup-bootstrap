@@ -22,7 +22,7 @@
 - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with proxy
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
   args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -36,7 +36,7 @@
 - name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with proxy
   shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
   args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -50,7 +50,7 @@
 - name: Install bootstrap from development repositories with proxy
   shell: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
   args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -64,7 +64,7 @@
 - name: DEBUG_MODE - Install bootstrap from development repositories with proxy
   shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
   args:
-    creates: '{{ apigee_installation_home }}/apigee-service/bin/apigee-service'
+    creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
   env:
     JAVA_HOME: '{{ java_home }}'
   failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
