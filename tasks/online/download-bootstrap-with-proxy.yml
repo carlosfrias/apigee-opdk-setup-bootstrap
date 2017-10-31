@@ -1,5 +1,6 @@
 ---
 - name: Download bootstrap with proxy
+  become: yes
   bootstrap:
     dest_dir: '{{ opdk_installer_path }}'
     version: '{{ opdk_version }}'
