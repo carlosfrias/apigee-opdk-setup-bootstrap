@@ -41,7 +41,6 @@
 
   rescue:
     - name: Yum failed to update, let's clean yum
-      become: yes
       shell: 'yum clean all'
 
     - include_tasks: online/install-bootstrap-with-no-proxy.yml
@@ -49,3 +48,4 @@
 
     - include_tasks: online/install-bootstrap-with-proxy.yml
       when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+  become: yes
