@@ -29,6 +29,7 @@
   when: not bootstrap_exists.stat.exists
 
 - name: Yum clean all
+  become: yes
   shell: "yum clean all"
 
 - block:
@@ -40,6 +41,7 @@
 
   rescue:
     - name: Yum failed to update, let's clean yum
+      become: yes
       shell: 'yum clean all'
 
     - include_tasks: online/install-bootstrap-with-no-proxy.yml
