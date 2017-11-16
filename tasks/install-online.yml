@@ -5,13 +5,26 @@
     owner: "{{ opdk_user_name }}"
     group: "{{ opdk_group_name }}"
 
-- name: Download bootstrap with no proxy
-  include_tasks: online/download-bootstrap-with-no-proxy.yml
-  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
+#- name: Download bootstrap with no proxy
+#  include_tasks: online/download-bootstrap-with-no-proxy.yml
+#  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
+#
+#- name: Download bootstrap with proxy
+#  include_tasks: online/download-bootstrap-with-proxy.yml
+#  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
 
 - name: Download bootstrap with proxy
-  include_tasks: online/download-bootstrap-with-proxy.yml
-  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+  become: yes
+  bootstrap:
+    dest_dir: '{{ opdk_installer_path }}'
+    version: '{{ opdk_version }}'
+    url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}'
+    user_name: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
+    password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
+  register: results
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
 
 - name: Bootstrap script exists
   stat:
@@ -33,8 +46,8 @@
   shell: "yum clean all"
 
 - block:
-  - include_tasks: online/install-bootstrap-with-no-proxy.yml
-    when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
+#  - include_tasks: online/install-bootstrap-with-no-proxy.yml
+#    when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
 
   - include_tasks: online/install-bootstrap-with-proxy.yml
     when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
@@ -43,8 +56,8 @@
     - name: Yum failed to update, let's clean yum
       shell: 'yum clean all'
 
-    - include_tasks: online/install-bootstrap-with-no-proxy.yml
-      when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
+#    - include_tasks: online/install-bootstrap-with-no-proxy.yml
+#      when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
 
     - include_tasks: online/install-bootstrap-with-proxy.yml
       when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
