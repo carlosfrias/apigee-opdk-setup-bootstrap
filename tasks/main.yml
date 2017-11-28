@@ -1,5 +1,8 @@
 ---
 # tasks file for apigee-opdk-setup-bootstrap
+- name: Update cache
+  include_tasks: cache.yml
+
 - name: Create installer path
   file:
     path: "{{ opdk_installer_path }}"
