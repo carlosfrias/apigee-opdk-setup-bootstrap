@@ -10,10 +10,12 @@
     owner: "{{ opdk_user_name }}"
     group: "{{ opdk_group_name }}"
 
-- include_tasks: install-online.yml
+- name: Install from a local web server or internet
+  include_tasks: install-online.yml
   when: install_archive_mirror is not defined
 
-- include_tasks: install-archive-mirror.yml
+- name: Install from a local archive file
+  include_tasks: install-archive-mirror.yml
   when: install_archive_mirror is defined and install_archive_mirror | bool == True
 
 - name: Validate that apigee-service exists
