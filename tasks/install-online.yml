@@ -1,10 +1,4 @@
 ---
-- name: Create installer path
-  file:
-    path: "{{ opdk_installer_path }}"
-    owner: "{{ opdk_user_name }}"
-    group: "{{ opdk_group_name }}"
-
 #- name: Download bootstrap with no proxy
 #  include_tasks: online/download-bootstrap-with-no-proxy.yml
 #  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')

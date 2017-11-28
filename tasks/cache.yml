@@ -1,6 +1,7 @@
 ---
 # tasks file for apigee-opdk-setup-bootstrap
 - name: Update bootstrap cache with key and value
+  tags: ['cache']
   cache:
     key: "{{ item.key }}"
     value: "{{ item.value }}"
