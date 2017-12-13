@@ -11,7 +11,6 @@
   - { key: 'apigee_setup', value: '{{ apigee_setup }}' }
   - { key: 'apigee_update', value: '{{ apigee_update }}' }
   - { key: 'apigee_all', value: '{{ apigee_all }}' }
-  - { key: 'opdk_installer_path', value: '{{ opdk_installer_path }}' }
   - { key: 'opdk_license_target_file_path', value: "{{ opdk_license_target_file_path }}" }
   - { key: 'opdk_license_source_file_name', value: "{{ opdk_license_source_file_name }}" }
   - { key: 'default_apigee_repo_user', value: '{{ default_apigee_repo_user }}' }
