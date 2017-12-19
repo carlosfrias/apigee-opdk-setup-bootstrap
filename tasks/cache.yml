@@ -7,10 +7,6 @@
     value: "{{ item.value }}"
   with_items:
   - { key: "apigeerepobasepath", value: "{{ apigee_home }}/data/apigee-mirror" }
-  - { key: 'apigee_service', value: '{{ apigee_home }}/apigee-service/bin/apigee-service' }
-  - { key: 'apigee_setup', value: '{{ apigee_home }}/apigee-setup/bin/setup.sh' }
-  - { key: 'apigee_update', value: '{{ apigee_home }}/apigee-setup/bin/update.sh' }
-  - { key: 'apigee_all', value: '{{ apigee_home }}/apigee-service/bin/apigee-all' }
   - { key: 'opdk_license_target_file_path', value: "{{ opdk_installer_path }}/license.conf" }
   - { key: 'opdk_license_source_file_name', value: "{{ local_apigee_secure }}/license.txt" }
   - { key: 'default_apigee_repo_user', value: '{{ opdk_user_name }}' }
