@@ -17,4 +17,4 @@
   - { key: 'default_apigee_repo_password', value: '' }
   - { key: 'default_apigee_repo_uri', value: 'software.apigee.com' }
   - { key: 'default_apigee_repo_protocol', value: 'https' }
-  - { key: 'default_apigee_repo_url', value: 'https://software.apigee.com' }
+  - { key: 'default_apigee_repo_url', value: '{{ default_apigee_repo_protocol }}://{{ default_apigee_repo_uri }}' }
