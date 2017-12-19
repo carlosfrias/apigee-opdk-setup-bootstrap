@@ -6,15 +6,15 @@
     key: "{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
-  - { key: "apigeerepobasepath", value: "{{ apigeerepobasepath }}" }
-  - { key: 'apigee_service', value: '{{ apigee_service }}' }
-  - { key: 'apigee_setup', value: '{{ apigee_setup }}' }
-  - { key: 'apigee_update', value: '{{ apigee_update }}' }
-  - { key: 'apigee_all', value: '{{ apigee_all }}' }
-  - { key: 'opdk_license_target_file_path', value: "{{ opdk_license_target_file_path }}" }
-  - { key: 'opdk_license_source_file_name', value: "{{ opdk_license_source_file_name }}" }
-  - { key: 'default_apigee_repo_user', value: '{{ default_apigee_repo_user }}' }
-  - { key: 'default_apigee_repo_password', value: '{{ default_apigee_repo_password}}' }
-  - { key: 'default_apigee_repo_uri', value: '{{ default_apigee_repo_uri }}' }
-  - { key: 'default_apigee_repo_protocol', value: '{{ default_apigee_repo_protocol }}' }
-  - { key: 'default_apigee_repo_url', value: '{{ default_apigee_repo_url }}' }
+  - { key: "apigeerepobasepath", value: "{{ apigee_home }}/data/apigee-mirror" }
+  - { key: 'apigee_service', value: '{{ apigee_home }}/apigee-service/bin/apigee-service' }
+  - { key: 'apigee_setup', value: '{{ apigee_home }}/apigee-setup/bin/setup.sh' }
+  - { key: 'apigee_update', value: '{{ apigee_home }}/apigee-setup/bin/update.sh' }
+  - { key: 'apigee_all', value: '{{ apigee_home }}/apigee-service/bin/apigee-all' }
+  - { key: 'opdk_license_target_file_path', value: "{{ opdk_installer_path }}/license.conf" }
+  - { key: 'opdk_license_source_file_name', value: "{{ local_apigee_secure }}/license.txt" }
+  - { key: 'default_apigee_repo_user', value: '{{ opdk_user_name }}' }
+  - { key: 'default_apigee_repo_password', value: '' }
+  - { key: 'default_apigee_repo_uri', value: 'software.apigee.com' }
+  - { key: 'default_apigee_repo_protocol', value: 'https' }
+  - { key: 'default_apigee_repo_url', value: '{{ default_apigee_repo_protocol }}://{{ default_apigee_repo_uri }}' }
