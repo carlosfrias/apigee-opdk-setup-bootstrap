@@ -28,4 +28,13 @@
     msg: "Failing the playbook because apigee-service should be installed now and it was not installed"
   when: not apigee_service.stat.exists
 
+- name: Install Apigee component with proxy - {{ component }}
+  command: '{{ apigee_service }} {{ component }} install'
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
+    PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
+    UP_TIMEOUT: '{{ up_timeout | default(60) }}'
+  when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
 

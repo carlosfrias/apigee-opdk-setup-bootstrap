@@ -40,11 +40,11 @@
   shell: "yum clean all"
 
 - block:
-  - include_tasks: install-bootstrap-with-proxy.yml
+  - include_tasks: install-bootstrap.yml
 
   rescue:
     - name: Yum failed to update, let's clean yum
-      shell: 'yum clean all'
+      command: 'yum clean all'
 
-    - include_tasks: install-bootstrap-with-proxy.yml
+    - include_tasks: install-bootstrap.yml
   become: yes
