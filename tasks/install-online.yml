@@ -40,19 +40,11 @@
   shell: "yum clean all"
 
 - block:
-#  - include_tasks: online/install-bootstrap-with-no-proxy.yml
-#    when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
-
-  - include_tasks: online/install-bootstrap-with-proxy.yml
-#    when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+  - include_tasks: install-bootstrap-with-proxy.yml
 
   rescue:
     - name: Yum failed to update, let's clean yum
       shell: 'yum clean all'
 
-#    - include_tasks: online/install-bootstrap-with-no-proxy.yml
-#      when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
-
-    - include_tasks: online/install-bootstrap-with-proxy.yml
-#      when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
+    - include_tasks: install-bootstrap-with-proxy.yml
   become: yes
