@@ -30,11 +30,5 @@
 
 - name: Install Apigee component with proxy - apigee-setup
   command: '{{ apigee_service }} apigee-setup install'
-  environment:
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
-    no_proxy: "{{ no_proxy }}"
-    PORT_TIMEOUT: '{{ port_timeout | default(60) }}'
-    UP_TIMEOUT: '{{ up_timeout | default(60) }}'
   when: (opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off') and apigee_service.stat.executable
 
