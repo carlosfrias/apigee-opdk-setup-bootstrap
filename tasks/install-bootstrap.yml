@@ -3,7 +3,7 @@
   - name: Update apigee-service if upgrade_edge is set as part of an upgrade with proxy
     become: yes
     become_user: root
-    command: "{{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+    command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
     env:
       JAVA_HOME: '{{ java_home }}'
     when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
@@ -27,7 +27,7 @@
     - name: Update apigee-service if upgrade_edge is set as part of an upgrade with proxy
       become: yes
       become_user: root
-      command: "{{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+      command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
       env:
         JAVA_HOME: '{{ java_home }}'
       when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
