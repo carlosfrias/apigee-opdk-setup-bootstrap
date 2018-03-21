@@ -1,12 +1,4 @@
 ---
-#- name: Download bootstrap with no proxy
-#  include_tasks: online/download-bootstrap-with-no-proxy.yml
-#  when: (https_proxy is not defined or https_proxy | trim == '') and (http_proxy is not defined or http_proxy | trim == '')
-#
-#- name: Download bootstrap with proxy
-#  include_tasks: online/download-bootstrap-with-proxy.yml
-#  when: https_proxy is defined and https_proxy | trim != '' and http_proxy is defined and http_proxy | trim != ''
-
 - name: Download bootstrap with proxy
   become: yes
   bootstrap:
