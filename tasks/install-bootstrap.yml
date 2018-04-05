@@ -1,6 +1,6 @@
 ---
 - block:
-  - name: Update apigee-service if upgrade_edge is set as part of an upgrade with proxy
+  - name: Update apigee-service if upgrade_edge is set as part of an upgrade
     become: yes
     become_user: root
     command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
@@ -12,7 +12,7 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
 
-  - name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade with proxy
+  - name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade
     become: yes
     become_user: root
     shell: "bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
@@ -24,7 +24,7 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
   rescue:
-    - name: Update apigee-service if upgrade_edge is set as part of an upgrade with proxy
+    - name: Update apigee-service if upgrade_edge is set as part of an upgrade
       become: yes
       become_user: root
       command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
@@ -39,12 +39,10 @@
   when: (apigee_repo_uri is not defined or apigee_repo_uri | trim | length == 0)
 
 - block:
-  - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with proxy
+  - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
     become: yes
     become_user: root
     command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    args:
-      creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
     env:
       JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -55,12 +53,10 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
 
-  - name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with proxy
+  - name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
     become: yes
     become_user: root
     shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    args:
-      creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
     env:
       JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -72,12 +68,10 @@
       https_proxy: "{{ https_proxy }}"
 
   rescue:
-    - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol with proxy
+    - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
       become: yes
       become_user: root
       command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-      args:
-        creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
       env:
         JAVA_HOME: '{{ java_home }}'
       failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -91,12 +85,10 @@
   when: (apigee_repo_uri is defined and apigee_repo_uri | trim | length > 0)
 
 - block:
-  - name: Install bootstrap from development repositories with proxy
+  - name: Install bootstrap from development repositories
     become: yes
     become_user: root
     command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    args:
-      creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
     env:
       JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -107,12 +99,10 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
 
-  - name: DEBUG_MODE - Install bootstrap from development repositories with proxy
+  - name: DEBUG_MODE - Install bootstrap from development repositories
     become: yes
     become_user: root
     shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    args:
-      creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
     env:
       JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -123,12 +113,10 @@
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
   rescue:
-    - name: Install bootstrap from development repositories with proxy
+    - name: Install bootstrap from development repositories
       become: yes
       become_user: root
       command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-      args:
-        creates: '{{ apigee_home }}/apigee-service/bin/apigee-service'
       env:
         JAVA_HOME: '{{ java_home }}'
       failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
