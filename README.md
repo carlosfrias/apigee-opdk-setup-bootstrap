@@ -17,6 +17,7 @@ Role Variables
 --------------
 Default values for these variables are provided by the role apigee-opdk-setup-default-settings.
 
+
 URL from which to download the bootstrap scripts
 
     apigee_repo_url: 'https://{{ apigee_repo_uri }}'
@@ -45,7 +46,7 @@ Apigee artifact stage
 Dependencies
 ------------
 
-role: apigee-opdk-setup-default-settings
+* apigee-opdk-setup-default-settings
 
 Example Playbook
 ----------------
