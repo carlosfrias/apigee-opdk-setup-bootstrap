@@ -7,40 +7,32 @@ OPDK service manager.
 Requirements
 ------------
 
-This role requires that you have an account with Apigee. 
+This role installs the Apigee bootstrap. This role can use your Apigee provided account to login and download required
+packages. Additionally, this role also works with a local Apigee repo that is either deployed as a tarball or to an 
+Nginx deployment to local data center.
  
-The installation of Apigee OPDK requires root access. Credentials must also be supplied to override the empty placeholders
-provided here. It is recommended that credentials be consolidated into a single credentials.yml file that can be stored 
-separately. It is assumed that files containing credentials are stored in the ~/.apigee folder. 
-
 Role Variables
 --------------
-Default values for these variables are provided by the role apigee-opdk-setup-default-settings.
+Default values for these variables are provided by the role apigee-opdk-setup-default-settings. The variables used in 
+this role are:
 
-
-URL from which to download the bootstrap scripts
-
-    apigee_repo_url: 'https://{{ apigee_repo_uri }}'
-
-Path to the bootstrap script
-
-    bootstrap_script: 'bootstrap.sh'
-
-Apigee repository user
-
-    apigee_repo_user: ''
-    
-Apigee repository user password
-
-    apigee_repo_password: ''
-    
-Apigee repository host that can be used for special releases.
-    
-    apigee_repo_host: ''
-    
-Apigee artifact stage
-    
-    apigee_stage: ''
+| Variable Name | Description |
+| --- | --- |
+| opdk_installer_path | Temporary staging folder for installation artifacts |
+| opdk_user_name | System user name. Set to `apigee` |  
+| opdk_group_name | System group name. Set to `apigee` |
+| apigee_service | Path to apigee-service command |  
+| bootstrap_script | Path to the bootstrap script |
+| opdk_version | Version of OPDK to install |
+| apigee_repo_url | URL from which to download the bootstrap scripts |
+| apigee_repo_user | Apigee repository user name for https://software.apigee.com |
+| apigee_repo_password | Apigee repository user password for https://software.apigee.com |
+| apigee_repo_host | Apigee repository host that can be used for special releases. |
+| apigee_stage | Apigee artifact stage |
+| apigee_repo_protocol | Access protocol to the Apigee repo. Set to `file` for a local tarball or `http` for either online or local nginx served repo.
+| http_proxy | HTTP Proxy url that should be used to get online |
+| https_proxy | HTTPS Proxy url that should be used to get online |
+| no_proxy | Domains or IPs that should not be proxied | 
         
 
 Dependencies
