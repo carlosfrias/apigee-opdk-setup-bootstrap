@@ -50,12 +50,14 @@ Example Playbook
 License
 -------
 
-Apache License Version 2.0, January 2004
+Apache 2.0
 
 Author Information
 ------------------
 
 Carlos Frias
+
+
 <!-- BEGIN Google Required Disclaimer -->
 
 # Not Google Product Clause
