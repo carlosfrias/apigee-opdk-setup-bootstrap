@@ -2,19 +2,19 @@
 # defaults file for apigee-opdk-setup-bootstrap
 #
 ## Path to the Apigee archive
-#apigeerepobasepath: '{{ apigee_home }}/data/apigee-mirror'
+#apigeerepobasepath: '{{ apigee_home | default('/opt/apigee') }}/data/apigee-mirror'
 #
 ## Apigee service command for 4.16.xx
-#apigee_service: '{{ apigee_home }}/apigee-service/bin/apigee-service'
+#apigee_service: '{{ apigee_home | default('/opt/apigee') }}/apigee-service/bin/apigee-service'
 #
 ## Apigee setup command for 4.16.xx
-#apigee_setup: '{{ apigee_home }}/apigee-setup/bin/setup.sh'
+#apigee_setup: '{{ apigee_home | default('/opt/apigee') }}/apigee-setup/bin/setup.sh'
 #
 ## Apigee update command for 4.16.xx
-#apigee_update: '{{ apigee_home }}/apigee-setup/bin/update.sh'
+#apigee_update: '{{ apigee_home | default('/opt/apigee') }}/apigee-setup/bin/update.sh'
 #
 ## Apigee all command for 4.16.xx
-#apigee_all: '{{ apigee_home }}/apigee-service/bin/apigee-all'
+#apigee_all: '{{ apigee_home | default('/opt/apigee') }}/apigee-service/bin/apigee-all'
 #
 ## Apigee license file path
 #opdk_license_target_file_path: "{{ opdk_installer_path }}/license.conf"
