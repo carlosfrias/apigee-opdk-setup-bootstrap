@@ -13,4 +13,3 @@
   - { key: 'default_apigee_repo_uri', value: 'software.apigee.com' }
   - { key: 'default_apigee_repo_protocol', value: 'https' }
   - { key: 'default_apigee_repo_url', value: 'https://software.apigee.com' }
-#  - { key: "apigeerepobasepath", value: "{{ apigee_home }}/data/apigee-mirror" }
