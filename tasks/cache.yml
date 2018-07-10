@@ -7,7 +7,7 @@
     value: "{{ item.value }}"
   with_items:
   - { key: 'opdk_license_target_file_path', value: "{{ opdk_installer_path }}/license.conf" }
-  - { key: 'opdk_license_source_file_name', value: "{{ local_apigee_secure }}/license.txt" }
+  - { key: 'opdk_license_source_file_name', value: "{{ local_apigee_secure_folder }}/license.txt" }
   - { key: 'default_apigee_repo_user', value: '{{ opdk_user_name }}' }
   - { key: 'default_apigee_repo_password', value: '' }
   - { key: 'default_apigee_repo_uri', value: 'software.apigee.com' }
