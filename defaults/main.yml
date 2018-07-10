@@ -5,7 +5,7 @@
 #apigeerepobasepath: '{{ apigee_home | default('/opt/apigee') }}/data/apigee-mirror'
 #
 ## Apigee service command
-apigee_service: '{{ apigee_home | default('/opt/apigee') }}/apigee-service/bin/apigee-service'
+apigee_service: /opt/apigee/apigee-service/bin/apigee-service
 
 ## Apigee setup command for 4.16.xx
 #apigee_setup: '{{ apigee_home | default('/opt/apigee') }}/apigee-setup/bin/setup.sh'
