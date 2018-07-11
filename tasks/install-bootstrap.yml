@@ -4,10 +4,9 @@
     become: yes
     become_user: root
     command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-    env:
-      JAVA_HOME: '{{ java_home }}'
     when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
+      JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy }}"
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -16,10 +15,9 @@
     become: yes
     become_user: root
     shell: "bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-    env:
-      JAVA_HOME: '{{ java_home }}'
     when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
+      JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy }}"
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -28,10 +26,9 @@
       become: yes
       become_user: root
       command: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-      env:
-        JAVA_HOME: '{{ java_home }}'
       when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
       environment:
+        JAVA_HOME: '{{ java_home }}'
         no_proxy: "{{ no_proxy }}"
         http_proxy: "{{ http_proxy }}"
         https_proxy: "{{ https_proxy }}"
@@ -43,12 +40,11 @@
     become: yes
     become_user: root
     command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    env:
-      JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
     register: results
     when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
+      JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy }}"
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -57,12 +53,11 @@
     become: yes
     become_user: root
     shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    env:
-      JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
     register: results
     when: apigee_stage is not defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
+      JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy }}"
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -72,12 +67,11 @@
       become: yes
       become_user: root
       command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-      env:
-        JAVA_HOME: '{{ java_home }}'
       failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
       register: results
       when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
       environment:
+        JAVA_HOME: '{{ java_home }}'
         no_proxy: "{{ no_proxy }}"
         http_proxy: "{{ http_proxy }}"
         https_proxy: "{{ https_proxy }}"
@@ -89,12 +83,11 @@
     become: yes
     become_user: root
     command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    env:
-      JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
     register: results
     when: apigee_stage is defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
+      JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy }}"
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -103,12 +96,11 @@
     become: yes
     become_user: root
     shell: 'bash -x {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-    env:
-      JAVA_HOME: '{{ java_home }}'
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
     register: results
     when: apigee_stage is defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
+      JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy }}"
       http_proxy: "{{ http_proxy }}"
       https_proxy: "{{ https_proxy }}"
@@ -117,12 +109,11 @@
       become: yes
       become_user: root
       command: 'bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX=C'
-      env:
-        JAVA_HOME: '{{ java_home }}'
       failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
       register: results
       when: apigee_stage is defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
       environment:
+        JAVA_HOME: '{{ java_home }}'
         no_proxy: "{{ no_proxy }}"
         http_proxy: "{{ http_proxy }}"
         https_proxy: "{{ https_proxy }}"
