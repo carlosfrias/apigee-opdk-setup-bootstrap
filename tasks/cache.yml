@@ -6,11 +6,17 @@
     key: "{{ item.key }}"
     value: "{{ item.value }}"
   with_items:
+  - { key: 'apigee_home', value: "{{ apigee_home }}" }
+  - { key: 'opdk_installer_path', value: "{{ opdk_installer_path }}" }
   - { key: 'opdk_license_target_file_path', value: "{{ opdk_installer_path }}/license.conf" }
   - { key: 'opdk_license_source_file_name', value: "{{ local_apigee_secure_folder }}/license.txt" }
   - { key: 'default_apigee_repo_user', value: '{{ opdk_user_name }}' }
   - { key: 'default_apigee_repo_password', value: '' }
   - { key: 'default_apigee_repo_uri', value: 'software.apigee.com' }
   - { key: 'default_apigee_repo_protocol', value: 'https' }
-  - { key: 'apigee_service', value: '{{ apigee_service }}' }
   - { key: 'default_apigee_repo_url', value: 'https://software.apigee.com' }
+  - { key: 'apigee_service', value: '{{ apigee_home }}/apigee-service/bin/apigee-service' }
+  - { key: 'apigee_setup', value: '{{ apigee_home }}/apigee-setup/bin/setup.sh' }
+  - { key: 'apigee_update', value: '{{ apigee_home }}/apigee-setup/bin/update.sh' }
+  - { key: 'apigee_all', value: '{{ apigee_home }}/apigee-service/bin/apigee-all' }
+
