@@ -30,7 +30,10 @@
 
 - name: Yum clean all
   become: yes
-  shell: "yum clean all"
+  shell: "{{ item }}"
+  with_items:
+  - "yum clean all"
+  - "rm -rf /var/cache/yum"
 
 - block:
   - include_tasks: install-bootstrap.yml
