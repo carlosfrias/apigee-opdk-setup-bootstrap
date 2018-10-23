@@ -9,9 +9,9 @@
     password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
   register: results
   environment:
-    no_proxy: "{{ no_proxy }}"
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy | default('') }}"
+    http_proxy: "{{ http_proxy | default('') }}"
+    https_proxy: "{{ https_proxy | default('') }}"
 
 - name: Bootstrap script exists
   stat:

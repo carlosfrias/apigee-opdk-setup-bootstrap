@@ -7,9 +7,9 @@
     when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
       JAVA_HOME: '{{ java_home }}'
-      no_proxy: "{{ no_proxy }}"
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
 
   - name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade
     become: yes
@@ -18,9 +18,9 @@
     when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
       JAVA_HOME: '{{ java_home }}'
-      no_proxy: "{{ no_proxy }}"
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
   rescue:
     - name: Update apigee-service if upgrade_edge is set as part of an upgrade
       become: yes
@@ -29,9 +29,9 @@
       when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
       environment:
         JAVA_HOME: '{{ java_home }}'
-        no_proxy: "{{ no_proxy }}"
-        http_proxy: "{{ http_proxy }}"
-        https_proxy: "{{ https_proxy }}"
+        no_proxy: "{{ no_proxy | default('') }}"
+        http_proxy: "{{ http_proxy | default('') }}"
+        https_proxy: "{{ https_proxy | default('') }}"
 
   when: (apigee_repo_uri is not defined or apigee_repo_uri | trim | length == 0)
 
@@ -45,9 +45,9 @@
     when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
       JAVA_HOME: '{{ java_home }}'
-      no_proxy: "{{ no_proxy }}"
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
 
   - name: DEBUG_MODE - Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
     become: yes
@@ -58,9 +58,9 @@
     when: apigee_stage is not defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
       JAVA_HOME: '{{ java_home }}'
-      no_proxy: "{{ no_proxy }}"
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
 
   rescue:
     - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
@@ -72,9 +72,9 @@
       when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
       environment:
         JAVA_HOME: '{{ java_home }}'
-        no_proxy: "{{ no_proxy }}"
-        http_proxy: "{{ http_proxy }}"
-        https_proxy: "{{ https_proxy }}"
+        no_proxy: "{{ no_proxy | default('') }}"
+        http_proxy: "{{ http_proxy | default('') }}"
+        https_proxy: "{{ https_proxy | default('') }}"
 
   when: (apigee_repo_uri is defined and apigee_repo_uri | trim | length > 0)
 
@@ -88,9 +88,9 @@
     when: apigee_stage is defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
       JAVA_HOME: '{{ java_home }}'
-      no_proxy: "{{ no_proxy }}"
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
 
   - name: DEBUG_MODE - Install bootstrap from development repositories
     become: yes
@@ -101,9 +101,9 @@
     when: apigee_stage is defined and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
       JAVA_HOME: '{{ java_home }}'
-      no_proxy: "{{ no_proxy }}"
-      http_proxy: "{{ http_proxy }}"
-      https_proxy: "{{ https_proxy }}"
+      no_proxy: "{{ no_proxy | default('') }}"
+      http_proxy: "{{ http_proxy | default('') }}"
+      https_proxy: "{{ https_proxy | default('') }}"
   rescue:
     - name: Install bootstrap from development repositories
       become: yes
@@ -114,8 +114,8 @@
       when: apigee_stage is defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
       environment:
         JAVA_HOME: '{{ java_home }}'
-        no_proxy: "{{ no_proxy }}"
-        http_proxy: "{{ http_proxy }}"
-        https_proxy: "{{ https_proxy }}"
+        no_proxy: "{{ no_proxy | default('') }}"
+        http_proxy: "{{ http_proxy | default('') }}"
+        https_proxy: "{{ https_proxy | default('') }}"
 
   when: apigee_stage is defined or apigee_stage | trim | length > 0
