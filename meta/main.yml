@@ -12,6 +12,5 @@ galaxy_info:
   galaxy_tags:
   - apigee
   - opdk
-dependencies:
-- { role: apigee-opdk-modules }
+dependencies: []
 
