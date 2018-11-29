@@ -15,7 +15,9 @@
   when: install_archive_mirror is not defined
 
 - name: Install from a local archive file
-  include_tasks: install-archive-mirror.yml
+#  include_tasks: install-archive-mirror.yml
+  import_role:
+    name: apigee-opdk-setup-bootstrap
   when: install_archive_mirror is defined and install_archive_mirror | bool == True
 
 - name: Validate that apigee-service exists
