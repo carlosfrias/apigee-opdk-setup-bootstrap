@@ -42,3 +42,7 @@ opdk_installer_path: "/tmp/edge"
 
 # Default apigee installation home
 apigee_home: /opt/apigee
+
+# Default name of apigee archive
+apigee_archive_name: "apigee-{{ apigeereleasever | default(opdk_version) }}"
+
