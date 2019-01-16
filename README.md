@@ -23,7 +23,7 @@ this role are:
 | opdk_group_name | System group name. Set to `apigee` |
 | apigee_service | Path to apigee-service command |  
 | bootstrap_script | Path to the bootstrap script |
-| opdk_version | Version of OPDK to install |
+| opdk_version is Version of OPDK to install |
 | apigee_repo_url | URL from which to download the bootstrap scripts |
 | apigee_repo_user | Apigee repository user name for https://software.apigee.com |
 | apigee_repo_password | Apigee repository user password for https://software.apigee.com |
