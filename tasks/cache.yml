@@ -2,21 +2,19 @@
 # tasks file for apigee-opdk-setup-bootstrap
 - name: Update bootstrap cache with key and value
   tags: ['cache']
-  cache:
-    key: "{{ item.key }}"
-    value: "{{ item.value }}"
-  with_items:
-  - { key: 'apigee_home', value: "{{ apigee_home }}" }
-  - { key: 'opdk_installer_path', value: "{{ opdk_installer_path }}" }
-  - { key: 'opdk_license_target_file_path', value: "{{ opdk_installer_path }}/license.conf" }
-  - { key: 'opdk_license_source_file_name', value: "{{ local_apigee_secure_folder }}/license.txt" }
-  - { key: 'default_apigee_repo_user', value: '{{ opdk_user_name }}' }
-  - { key: 'default_apigee_repo_password', value: '' }
-  - { key: 'default_apigee_repo_uri', value: 'software.apigee.com' }
-  - { key: 'default_apigee_repo_protocol', value: 'https' }
-  - { key: 'default_apigee_repo_url', value: 'https://software.apigee.com' }
-  - { key: 'apigee_service', value: '{{ apigee_home }}/apigee-service/bin/apigee-service' }
-  - { key: 'apigee_setup', value: '{{ apigee_home }}/apigee-setup/bin/setup.sh' }
-  - { key: 'apigee_update', value: '{{ apigee_home }}/apigee-setup/bin/update.sh' }
-  - { key: 'apigee_all', value: '{{ apigee_home }}/apigee-service/bin/apigee-all' }
+  set_fact:
+    cacheable: yes
+    apigee_home: "{{ apigee_home }}"
+    opdk_installer_path: "{{ opdk_installer_path }}"
+    opdk_license_target_file_path: "{{ opdk_installer_path }}/license.conf"
+    opdk_license_source_file_name: "{{ local_apigee_secure_folder }}/license.txt"
+    default_apigee_repo_user: '{{ opdk_user_name }}'
+    default_apigee_repo_password: ''
+    default_apigee_repo_uri: 'software.apigee.com'
+    default_apigee_repo_protocol: 'https'
+    default_apigee_repo_url: 'https://software.apigee.com'
+    apigee_service: '{{ apigee_home }}/apigee-service/bin/apigee-service'
+    apigee_setup: '{{ apigee_home }}/apigee-setup/bin/setup.sh'
+    apigee_update: '{{ apigee_home }}/apigee-setup/bin/update.sh'
+    apigee_all: '{{ apigee_home }}/apigee-service/bin/apigee-all'
 

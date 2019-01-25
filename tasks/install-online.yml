@@ -19,9 +19,9 @@
   register: bootstrap_exists
 
 - name: Cache bootstrap script state
-  cache:
-    key: bootstrap_script_exists
-    value: '{{ bootstrap_exists.stat.exists }}'
+  set_fact:
+    cacheable: yes
+    bootstrap_script_exists: '{{ bootstrap_exists.stat.exists }}'
 
 - name: Fail the playbook if bootstrap fails to download
   fail:
