@@ -1,4 +1,12 @@
 ---
+- name: Pause for upgrade check
+  pause:
+    prompt: "Check for upgrade_edge"
+
+- name: upgrade_edge setting
+  debug:
+    var: upgrade_edge
+
 - block:
   - name: Update apigee-service if upgrade_edge is set as part of an upgrade
     become: yes
@@ -12,6 +20,9 @@
       no_proxy: "{{ no_proxy | default('') }}"
       http_proxy: "{{ http_proxy | default('') }}"
       https_proxy: "{{ https_proxy | default('') }}"
+
+  - pause:
+      prompt: "Did upgrade_edge work?"
 
   - name: DEBUG_MODE - Update apigee-service if upgrade_edge is set as part of an upgrade
     become: yes
