@@ -17,4 +17,6 @@
     apigee_setup: '{{ apigee_home }}/apigee-setup/bin/setup.sh'
     apigee_update: '{{ apigee_home }}/apigee-setup/bin/update.sh'
     apigee_all: '{{ apigee_home }}/apigee-service/bin/apigee-all'
+    local_apigee_path: "{{ local_apigee_path }}"
+    local_apigee_secure_folder: "{{ local_apigee_secure_folder }}"
 

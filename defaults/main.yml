@@ -37,6 +37,9 @@
 
 local_apigee_secure_folder: ~/.apigee-secure
 
+# Local resource location
+local_apigee_path: ~/.apigee
+
 # Apigee staging installation folder
 opdk_resources_path: "/tmp/edge"
 
