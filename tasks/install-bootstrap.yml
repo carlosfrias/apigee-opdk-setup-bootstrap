@@ -22,16 +22,38 @@
       http_proxy: "{{ http_proxy | default('') }}"
       https_proxy: "{{ https_proxy | default('') }}"
   rescue:
-    - name: RESCUE - Update apigee-service if upgrade_edge is set as part of an upgrade
-      become: yes
-      become_user: root
-      shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
-      when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
-      environment:
-        JAVA_HOME: '{{ java_home }}'
-        no_proxy: "{{ no_proxy | default('') }}"
-        http_proxy: "{{ http_proxy | default('') }}"
-        https_proxy: "{{ https_proxy | default('') }}"
+    - block:
+      - name: RESCUE - Update apigee-service if upgrade_edge is set as part of an upgrade
+        become: yes
+        become_user: root
+        shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+        when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+        environment:
+          JAVA_HOME: '{{ java_home }}'
+          no_proxy: "{{ no_proxy | default('') }}"
+          http_proxy: "{{ http_proxy | default('') }}"
+          https_proxy: "{{ https_proxy | default('') }}"
+      rescue:
+        - name: RESCUE - Disable apigee-thirdparty repo
+          yum_repository:
+            name: "apigee-thirdparty"
+            enabled: false
+
+        - name: RESCUE - Update apigee-service if upgrade_edge is set as part of an upgrade
+          become: yes
+          become_user: root
+          shell: "bash {{ bootstrap_script }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX=C"
+          when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+          environment:
+            JAVA_HOME: '{{ java_home }}'
+            no_proxy: "{{ no_proxy | default('') }}"
+            http_proxy: "{{ http_proxy | default('') }}"
+            https_proxy: "{{ https_proxy | default('') }}"
+
+        - name: RESCUE - Re-enable apigee-thirdparty repo
+          yum_repository:
+            name: "apigee-thirdparty"
+            enabled: true
 
   when: (apigee_repo_uri is not defined or apigee_repo_uri | trim | length == 0)
 
