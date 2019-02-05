@@ -18,7 +18,7 @@ this role are:
 
 | Variable Name | Description |
 | --- | --- |
-| opdk_installer_path | Temporary staging folder for installation artifacts |
+| opdk_resources_path | Temporary staging folder for installation artifacts |
 | opdk_user_name | System user name. Set to `apigee` |  
 | opdk_group_name | System group name. Set to `apigee` |
 | apigee_service | Path to apigee-service command |  

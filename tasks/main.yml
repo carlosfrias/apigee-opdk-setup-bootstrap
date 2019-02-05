@@ -5,7 +5,7 @@
 
 - name: Create installer path
   file:
-    path: "{{ opdk_installer_path }}"
+    path: "{{ opdk_resources_path }}"
     state: directory
     owner: "{{ opdk_user_name }}"
     group: "{{ opdk_group_name }}"

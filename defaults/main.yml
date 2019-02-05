@@ -17,7 +17,7 @@
 #apigee_all: '{{ apigee_home | default('/opt/apigee') }}/apigee-service/bin/apigee-all'
 #
 ## Apigee license file path
-#opdk_license_target_file_path: "{{ opdk_installer_path }}/license.conf"
+#opdk_license_target_file_path: "{{ opdk_resources_path }}/license.conf"
 #
 ## Apigee license file provided by customer
 #opdk_license_source_file_name: '{{ local_apigee_secure }}/license.txt'
@@ -38,7 +38,7 @@
 local_apigee_secure_folder: ~/.apigee-secure
 
 # Apigee staging installation folder
-opdk_installer_path: "/tmp/edge"
+opdk_resources_path: "/tmp/edge"
 
 # Default apigee installation home
 apigee_home: /opt/apigee

@@ -5,8 +5,8 @@
   set_fact:
     cacheable: yes
     apigee_home: "{{ apigee_home }}"
-    opdk_installer_path: "{{ opdk_installer_path }}"
-    opdk_license_target_file_path: "{{ opdk_installer_path }}/license.conf"
+    opdk_resources_path: "{{ opdk_resources_path }}"
+    opdk_license_target_file_path: "{{ opdk_resources_path }}/license.conf"
     opdk_license_source_file_name: "{{ local_apigee_secure_folder }}/license.txt"
     default_apigee_repo_user: '{{ opdk_user_name }}'
     default_apigee_repo_password: ''
