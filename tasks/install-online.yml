@@ -11,6 +11,7 @@
   uri:
     url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}/{{ bootstrap_file_name }}'
     dest: '{{ bootstrap_file_path }}'
+    creates: '{{ bootstrap_file_path }}'
     user: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
     password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
   register: results
