@@ -15,7 +15,6 @@
   set_fact:
     cacheable: yes
     bootstrap_file_path: "{{ opdk_resources_path }}/{{ bootstrap_file_name }}"
-  when: opdk_version is version_compare('4.16.01', '==')
 
 - name: Download bootstrap with proxy
   become: yes
