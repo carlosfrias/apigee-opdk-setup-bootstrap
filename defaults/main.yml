@@ -49,3 +49,6 @@ apigee_home: /opt/apigee
 # Default name of apigee archive
 apigee_archive_name: "apigee-{{ apigeereleasever | default(opdk_version) }}"
 
+# Default bootstrap name
+bootstrap_file_name: 'bootstrap.sh'
+

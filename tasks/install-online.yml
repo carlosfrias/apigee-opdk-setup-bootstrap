@@ -1,11 +1,30 @@
 ---
+#- name: Download bootstrap with proxy
+#  become: yes
+#  bootstrap:
+#    dest_dir: '{{ opdk_resources_path }}'
+#    version: '{{ opdk_version }}'
+#    url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}'
+#    user_name: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
+#    password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
+#  register: results
+#  environment:
+#    no_proxy: "{{ no_proxy | default('') }}"
+#    http_proxy: "{{ http_proxy | default('') }}"
+#    https_proxy: "{{ https_proxy | default('') }}"
+
+- name: Construct Bootstrap Name
+  set_fact:
+    cacheable: yes
+    bootstrap_file_name: "bootstrap_{{ opdk_version }}.sh"
+  when: opdk_version is version_compare('4.16.01', '>')
+
 - name: Download bootstrap with proxy
   become: yes
-  bootstrap:
-    dest_dir: '{{ opdk_resources_path }}'
-    version: '{{ opdk_version }}'
-    url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}'
-    user_name: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
+  uri:
+    url: 'https://{{ apigee_repo_url | default(default_apigee_repo_url) }}/{{ bootstrap_file_name }}'
+    dest: '{{ opdk_resources_path }}/{{ bootstrap_file_name }}'
+    user: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
     password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
   register: results
   environment:
