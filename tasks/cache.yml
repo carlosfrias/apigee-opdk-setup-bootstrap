@@ -19,4 +19,6 @@
     apigee_all: '{{ apigee_home }}/apigee-service/bin/apigee-all'
     local_apigee_path: "{{ local_apigee_path }}"
     local_apigee_secure_folder: "{{ local_apigee_secure_folder }}"
+    bootstrap_file_name: 'bootstrap.sh'
+
 

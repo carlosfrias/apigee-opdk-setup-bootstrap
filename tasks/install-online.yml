@@ -1,18 +1,4 @@
 ---
-#- name: Download bootstrap with proxy
-#  become: yes
-#  bootstrap:
-#    dest_dir: '{{ opdk_resources_path }}'
-#    version: '{{ opdk_version }}'
-#    url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}'
-#    user_name: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
-#    password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
-#  register: results
-#  environment:
-#    no_proxy: "{{ no_proxy | default('') }}"
-#    http_proxy: "{{ http_proxy | default('') }}"
-#    https_proxy: "{{ https_proxy | default('') }}"
-
 - name: Construct Bootstrap Name
   set_fact:
     cacheable: yes
@@ -41,7 +27,7 @@
 - name: Cache bootstrap script state
   set_fact:
     cacheable: yes
-    bootstrap_script_exists: '{{ bootstrap_exists.stat.exists }}'
+    bootstrap_file_path_exists: '{{ bootstrap_exists.stat.exists }}'
 
 - name: Fail the playbook if bootstrap fails to download
   fail:
