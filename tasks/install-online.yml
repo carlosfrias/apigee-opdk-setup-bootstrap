@@ -17,13 +17,14 @@
   set_fact:
     cacheable: yes
     bootstrap_file_name: "bootstrap_{{ opdk_version }}.sh"
+    bootstrap_file_path: "{{ opdk_resources_path }}/{{ bootstrap_file_name }}"
   when: opdk_version is version_compare('4.16.01', '>')
 
 - name: Download bootstrap with proxy
   become: yes
   uri:
     url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}/{{ bootstrap_file_name }}'
-    dest: '{{ opdk_resources_path }}/{{ bootstrap_file_name }}'
+    dest: '{{ bootstrap_file_path }}'
     user: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
     password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
   register: results
@@ -34,7 +35,7 @@
 
 - name: Bootstrap script exists
   stat:
-    path: '{{ bootstrap_script }}'
+    path: '{{ bootstrap_file_path }}'
   register: bootstrap_exists
 
 - name: Cache bootstrap script state
