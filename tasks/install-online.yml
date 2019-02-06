@@ -22,7 +22,7 @@
 - name: Download bootstrap with proxy
   become: yes
   uri:
-    url: 'https://{{ apigee_repo_url | default(default_apigee_repo_url) }}/{{ bootstrap_file_name }}'
+    url: '{{ apigee_repo_url | default(default_apigee_repo_url) }}/{{ bootstrap_file_name }}'
     dest: '{{ opdk_resources_path }}/{{ bootstrap_file_name }}'
     user: '{{ apigee_repo_user | default(default_apigee_repo_user) }}'
     password: '{{ apigee_repo_password | default(default_apigee_repo_password) }}'
