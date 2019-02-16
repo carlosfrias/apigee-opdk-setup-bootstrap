@@ -7,7 +7,7 @@
     apigee_home: "{{ apigee_home }}"
     opdk_resources_path: "{{ opdk_resources_path }}"
     opdk_license_target_file_path: "{{ opdk_resources_path }}/license.conf"
-    opdk_license_source_file_name: "{{ local_apigee_secure_folder }}/license.txt"
+    opdk_license_source_file_name: "{{ local_apigee_secure_path }}/license.txt"
     default_apigee_repo_user: '{{ opdk_user_name }}'
     default_apigee_repo_password: ''
     default_apigee_repo_uri: 'software.apigee.com'
@@ -18,6 +18,6 @@
     apigee_update: '{{ apigee_home }}/apigee-setup/bin/update.sh'
     apigee_all: '{{ apigee_home }}/apigee-service/bin/apigee-all'
     local_apigee_path: "{{ local_apigee_path }}"
-    local_apigee_secure_folder: "{{ local_apigee_secure_folder }}"
+    local_apigee_secure_path: "{{ local_apigee_secure_path }}"
 
 

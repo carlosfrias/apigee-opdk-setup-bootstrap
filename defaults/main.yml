@@ -20,7 +20,7 @@
 #opdk_license_target_file_path: "{{ opdk_resources_path }}/license.conf"
 #
 ## Apigee license file provided by customer
-#opdk_license_source_file_name: '{{ local_apigee_secure }}/license.txt'
+#opdk_license_source_file_name: '{{ local_apigee_secure_path}}/license.txt'
 #
 ## Apigee bootstrap download user name
 #default_apigee_repo_user: '{{ opdk_user_name }}'
@@ -35,7 +35,7 @@
 #default_apigee_repo_protocol: 'https'
 #default_apigee_repo_url: '{{ default_apigee_repo_protocol }}://{{ default_apigee_repo_uri }}'
 
-local_apigee_secure_folder: ~/.apigee-secure
+local_apigee_secure_path: ~/.apigee-secure
 
 # Local resource location
 local_apigee_path: ~/.apigee
