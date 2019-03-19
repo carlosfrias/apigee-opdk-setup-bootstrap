@@ -10,14 +10,19 @@
     owner: "{{ opdk_user_name }}"
     group: "{{ opdk_group_name }}"
 
+- name: Does apigee_archive_name exist
+  stat:
+    path: "{{ apigee_archive_name }}"
+  register: archive
+
 - name: Install from a local web server or internet
   include_tasks: install-online.yml
-  when: apigee_archive_name is not defined or apigee_archive_name | trim | length == 0
+  when: not archive.stat.exists
 
 - name: Install from a local archive file
   import_role:
     name: apigee-opdk-setup-bootstrap-archive-installer
-  when: apigee_archive_name is defined or apigee_archive_name | trim | length > 0
+  when: archive.stat.exists
 
 - name: Validate that apigee-service exists
   stat:
