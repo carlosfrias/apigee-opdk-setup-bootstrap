@@ -39,7 +39,7 @@
   - name: Fail of stdout is empty
     fail:
       msg: "{{ bootstrap_file_path }} file is size 0"
-    when: bootstrap.stat.size == 0
+    when: bootstrap_file.stat.size == 0
 
   rescue:
     - name: Download bootstrap using wget
