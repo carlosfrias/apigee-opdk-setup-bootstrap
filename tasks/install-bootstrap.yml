@@ -4,7 +4,7 @@
     become: yes
     become_user: root
     shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
-    when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+    when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
       JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy | default('') }}"
@@ -15,7 +15,7 @@
     become: yes
     become_user: root
     shell: "bash -x {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
-    when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
+    when:  opdk_debug_mode is defined and opdk_debug_mode | trim | lower == 'on'
     environment:
       JAVA_HOME: '{{ java_home }}'
       no_proxy: "{{ no_proxy | default('') }}"
@@ -27,7 +27,7 @@
         become: yes
         become_user: root
         shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
-        when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+        when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
         environment:
           JAVA_HOME: '{{ java_home }}'
           no_proxy: "{{ no_proxy | default('') }}"
@@ -43,7 +43,7 @@
           become: yes
           become_user: root
           shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
-          when: upgrade_edge is defined and upgrade_edge | bool == True and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
+          when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
           environment:
             JAVA_HOME: '{{ java_home }}'
             no_proxy: "{{ no_proxy | default('') }}"
