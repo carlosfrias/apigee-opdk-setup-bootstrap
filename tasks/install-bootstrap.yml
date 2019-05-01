@@ -3,7 +3,7 @@
   - name: Update apigee-service if upgrade_edge is set as part of an upgrade
     become: yes
     become_user: root
-    shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
+    shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
     when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
     environment:
       JAVA_HOME: '{{ java_home }}'
@@ -26,7 +26,7 @@
       - name: RESCUE - Update apigee-service if upgrade_edge is set as part of an upgrade
         become: yes
         become_user: root
-        shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
+        shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
         when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
         environment:
           JAVA_HOME: '{{ java_home }}'
@@ -42,7 +42,7 @@
         - name: RESCUE - Update apigee-service if upgrade_edge is set as part of an upgrade
           become: yes
           become_user: root
-          shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
+          shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword='{{ apigee_repo_password }}' JAVA_FIX={{ java_fix | default('C') }}"
           when: opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
           environment:
             JAVA_HOME: '{{ java_home }}'
@@ -61,7 +61,7 @@
   - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
     become: yes
     become_user: root
-    shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
+    shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
     args:
       creates: "{{ apigee_home }}/apigee-service"
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -92,7 +92,7 @@
     - name: Install bootstrap from the provided apigee_repo_uri and apigee_repo_protocol
       become: yes
       become_user: root
-      shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
+      shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
       failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
       register: results
       when: apigee_stage is not defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
@@ -108,7 +108,7 @@
   - name: Install bootstrap from development repositories
     become: yes
     become_user: root
-    shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
+    shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
     args:
       creates: "{{ apigee_home }}/apigee-service"
     failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
@@ -138,7 +138,7 @@
     - name: Install bootstrap from development repositories
       become: yes
       become_user: root
-      shell: "bash {{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
+      shell: "{{ bootstrap_file_path }} apigeeuser={{ apigee_repo_user }} apigeepassword={{ apigee_repo_password }} apigeestage={{ apigee_stage }} apigeerepohost={{ apigee_repo_uri | default(default_apigee_repo_uri) }} apigeeprotocol={{ apigee_repo_protocol | default(default_apigee_repo_protocol) }}:// JAVA_FIX={{ java_fix | default('C') }}"
       failed_when: results is defined and results.rc is defined and results.rc > 0 or results | failed
       register: results
       when: apigee_stage is defined and opdk_debug_mode is not defined or opdk_debug_mode | trim | lower == 'off'
