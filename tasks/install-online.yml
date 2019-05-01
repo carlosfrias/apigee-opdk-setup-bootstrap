@@ -16,7 +16,7 @@
     cacheable: yes
     bootstrap_file_path: "{{ opdk_resources_path }}/{{ bootstrap_file_name }}"
 
--block:
+- block:
   - name: Download bootstrap with proxy
     become: yes
     uri:
