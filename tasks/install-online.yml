@@ -31,7 +31,8 @@
       http_proxy: "{{ http_proxy | default('') }}"
       https_proxy: "{{ https_proxy | default('') }}"
 
-  - name: Confirm script download
+  - name: Assert script download
+    become: yes
     stat:
       path: "{{ bootstrap_file_path }}"
     register: bootstrap_file
@@ -50,7 +51,8 @@
         http_proxy: "{{ http_proxy | default('') }}"
         https_proxy: "{{ https_proxy | default('') }}"
 
-- name: Bootstrap script exists
+- name: Assert bootstrap script exists
+  become: yes
   stat:
     path: '{{ bootstrap_file_path }}'
   register: bootstrap_exists
