@@ -9,6 +9,9 @@ local_apigee_path: ~/.apigee
 # Default apigee installation home
 apigee_home: /opt/apigee
 
+# Default Apigee Service Path
+apigee_service: "{{ apigee_home }}/apigee-service"
+
 # Apigee staging installation folder
 opdk_resources_path: "{{ apigee_home }}/customer/installation"
 
